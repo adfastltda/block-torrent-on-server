@@ -17,7 +17,7 @@ if you want use nft instead of iptables:
 
 ----
 
-## rollback 
+## uninstall 
 
 copy bellow command and run it in terminal , it rollback everything : 
 
