@@ -7,13 +7,13 @@ by this script you can block all torrent and p2p traffic on your server or vps a
 
 copy bellow command , paste in your terminal and run it :
 
-`wget https://github.com/nikzad-avasam/block-torrent-on-server/raw/main/btorrent.sh && chmod +x btorrent.sh && bash btorrent.sh`
+`wget https://github.com/adfastltda/block-torrent-on-server/raw/main/btorrent.sh && chmod +x btorrent.sh && bash btorrent.sh`
 
 ----
 
 if you want use nft instead of iptables:
 
-`wget https://github.com/nikzad-avasam/block-torrent-on-server/raw/main/block-torrent-nftables.sh && chmod +x block-torrent-nftables.sh && bash block-torrent-nftables.sh`
+`wget https://github.com/adfastltda/block-torrent-on-server/raw/main/block-torrent-nftables.sh && chmod +x block-torrent-nftables.sh && bash block-torrent-nftables.sh`
 
 ----
 
@@ -21,10 +21,11 @@ if you want use nft instead of iptables:
 
 copy bellow command and run it in terminal , it rollback everything : 
 
-`wget https://github.com/nikzad-avasam/block-torrent-on-server/raw/main/rollback-torrent-block.sh && chmod +x rollback-torrent-block.sh && sudo bash rollback-torrent-block.sh`
+`wget https://github.com/adfastltda/block-torrent-on-server/raw/main/rollback-torrent-block.sh && chmod +x rollback-torrent-block.sh && sudo bash rollback-torrent-block.sh`
 
 
 ----
 💚 stay safe.
 
  by [avasam](https://avasam.ir)
+ edit by [adfastltda](https://github.com/adfastltda/adfastltda)
