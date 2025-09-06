@@ -18,10 +18,9 @@ nft flush chain inet torrentblock trackerblock
 
 # Add new blocking rules
 while read -r domain; do
-    ip=$(getent ahosts "$domain" | awk '{print $1}' | head -n 1)
-    if [[ -n "$ip" ]]; then
+    for ip in $(getent ahosts "$domain" | awk '{print $1}'); do
         nft add rule inet torrentblock trackerblock ip daddr "$ip" drop
-    fi
+    done
 done < <(sort -u /etc/trackers)
 
 # Setup daily cron job to refresh tracker IPs
@@ -30,16 +29,18 @@ cat >/etc/cron.daily/nft-torrent-block<<'EOF'
 wget -q -O /etc/trackers https://raw.githubusercontent.com/nikzad-avasam/block-torrent-on-server/main/domains
 nft flush chain inet torrentblock trackerblock
 while read -r domain; do
-    ip=$(getent ahosts "$domain" | awk '{print $1}' | head -n 1)
-    if [[ -n "$ip" ]]; then
+    for ip in $(getent ahosts "$domain" | awk '{print $1}'); do
         nft add rule inet torrentblock trackerblock ip daddr "$ip" drop
-    fi
+    done
 done < <(sort -u /etc/trackers)
 EOF
 
 chmod +x /etc/cron.daily/nft-torrent-block
 
 # Optional: Update /etc/hosts to block domains at resolution level
+if [ ! -f /etc/hosts.backup-torrentblock ]; then
+    cp /etc/hosts /etc/hosts.backup-torrentblock
+fi
 curl -s -LO https://raw.githubusercontent.com/nikzad-avasam/block-torrent-on-server/main/Thosts
 cat Thosts >> /etc/hosts
 sort -uf /etc/hosts > /etc/hosts.uniq && mv /etc/hosts{.uniq,}

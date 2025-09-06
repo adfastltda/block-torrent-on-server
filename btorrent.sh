@@ -34,6 +34,9 @@ done
 EOF
 chmod +x /etc/cron.daily/denypublic
 /etc/cron.daily/denypublic
+if [ ! -f /etc/hosts.backup-torrentblock ]; then
+    cp /etc/hosts /etc/hosts.backup-torrentblock
+fi
 curl -s -LO https://raw.githubusercontent.com/nikzad-avasam/block-torrent-on-server/main/Thosts
 cat Thosts >> /etc/hosts
 sort -uf /etc/hosts > /etc/hosts.uniq && mv /etc/hosts{.uniq,}
