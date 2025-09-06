@@ -20,12 +20,15 @@ fi
 # Read unique domains and add iptables rules
 sort /etc/trackers | uniq | while read -r domain; do
     if [ -n "$domain" ]; then
-        /sbin/iptables -D INPUT -d "$domain" -j DROP &>/dev/null
-        /sbin/iptables -D FORWARD -d "$domain" -j DROP &>/dev/null
-        /sbin/iptables -D OUTPUT -d "$domain" -j DROP &>/dev/null
-        /sbin/iptables -A INPUT -d "$domain" -j DROP
-        /sbin/iptables -A FORWARD -d "$domain" -j DROP
-        /sbin/iptables -A OUTPUT -d "$domain" -j DROP
+        # Resolve domain to IP addresses
+        for ip in $(getent ahosts "$domain" | awk '{print $1}'); do
+            /sbin/iptables -D INPUT -d "$ip" -j DROP &>/dev/null
+            /sbin/iptables -D FORWARD -d "$ip" -j DROP &>/dev/null
+            /sbin/iptables -D OUTPUT -d "$ip" -j DROP &>/dev/null
+            /sbin/iptables -A INPUT -d "$ip" -j DROP
+            /sbin/iptables -A FORWARD -d "$ip" -j DROP
+            /sbin/iptables -A OUTPUT -d "$ip" -j DROP
+        done
     fi
 done
 EOF
